@@ -6,7 +6,7 @@ CREATE DATABASE IF NOT EXISTS Oficina;
 
 USE Oficina;
 
--- TABELA VEÍCULO  -----------------------OK
+-- TABELA VEÍCULO
 CREATE TABLE Veiculo(
 	idVeiculo INT auto_increment PRIMARY KEY,
     idRevisao INT,
@@ -14,21 +14,21 @@ CREATE TABLE Veiculo(
     CONSTRAINT placa_idVeiculo UNIQUE (idVeiculo, Placa)
 );
 
-	ALTER TABLE Veiculo ADD CONSTRAINT fk_eqpMecanicos_Veiculo -- OK
+	ALTER TABLE Veiculo ADD CONSTRAINT fk_eqpMecanicos_Veiculo 
 	FOREIGN KEY (idVeiculo)
 	REFERENCES EqpMecanicos(idEqpMecanicos);
 
-	ALTER TABLE Veiculo ADD CONSTRAINT fk_Conserto_Veiculo -- OK
+	ALTER TABLE Veiculo ADD CONSTRAINT fk_Conserto_Veiculo 
 	FOREIGN KEY (idVeiculo)
 	REFERENCES Conserto(idConserto);
 
-	ALTER TABLE Veiculo ADD CONSTRAINT fk_Revisao_Veiculo -- OK
+	ALTER TABLE Veiculo ADD CONSTRAINT fk_Revisao_Veiculo 
 	FOREIGN KEY (idRevisao)
 	REFERENCES Revisao(idRevisao);
 
--- DESC Veiculo;
+DESC Veiculo;
 
--- TABELA CLIENTES -----------------------------------OK
+-- TABELA CLIENTES 
 CREATE TABLE Clientes(
 	idClientes INT auto_increment PRIMARY KEY,
     idVeiculo INT
@@ -38,9 +38,9 @@ CREATE TABLE Clientes(
 	FOREIGN KEY (idVeiculo)
 	REFERENCES Veiculo(idVeiculo);
 
--- DESC Clientes;
+DESC Clientes;
 
--- TABELA PESSOA FÍSICA  ---------------------------------- ok
+-- TABELA PESSOA FÍSICA  
 CREATE TABLE PessoaFisica( 
 	idPessoaFisica INT auto_increment PRIMARY KEY,
     Nome VARCHAR(45) NOT NULL,
@@ -50,21 +50,21 @@ CREATE TABLE PessoaFisica(
     CONSTRAINT unique_cpf_PessoaFisica UNIQUE (CPF)
 );
 
-	ALTER TABLE PessoaFisica ADD CONSTRAINT fk_Clientes_PessoaFisica  -- OK
+	ALTER TABLE PessoaFisica ADD CONSTRAINT fk_Clientes_PessoaFisica  
 	FOREIGN KEY (idPessoaFisica)
 	REFERENCES Clientes(idClientes);
 
-	ALTER TABLE PessoaFisica ADD CONSTRAINT fk_clientes_pf  -- OK
+	ALTER TABLE PessoaFisica ADD CONSTRAINT fk_clientes_pf  
 	FOREIGN KEY (idPessoaFisica) 
 	REFERENCES Clientes(idClientes);
 
-	ALTER TABLE PessoaFisica ADD CONSTRAINT fk_veiculo_PessoaFisica  -- OK
+	ALTER TABLE PessoaFisica ADD CONSTRAINT fk_veiculo_PessoaFisica  
 	FOREIGN KEY (idPessoaFisica)
 	REFERENCES Veiculo(idVeiculo);
 
--- DESC PessoaFisica;
+DESC PessoaFisica;
 
--- TABELA PESSOA JURÍDICA ------------------------------ OK
+-- TABELA PESSOA JURÍDICA 
 CREATE TABLE PessoaJuridica(
 	idPessoaJuridica INT auto_increment PRIMARY KEY,
     RazaoSocial VARCHAR(45) NOT NULL,
@@ -74,32 +74,32 @@ CREATE TABLE PessoaJuridica(
     CONSTRAINT unique_cnpj_PessoaJuridica UNIQUE (CNPJ)
 );
 
-	ALTER TABLE PessoaJuridica ADD CONSTRAINT fk_clientes_PessoaJuridica  -- OK
+	ALTER TABLE PessoaJuridica ADD CONSTRAINT fk_clientes_PessoaJuridica  
     FOREIGN KEY (idPessoaJuridica)
     REFERENCES Clientes(idClientes);
     
-	ALTER TABLE PessoaJuridica ADD CONSTRAINT fk_veiculo_PessoaJuridica  -- OK
+	ALTER TABLE PessoaJuridica ADD CONSTRAINT fk_veiculo_PessoaJuridica  
     FOREIGN KEY (idPessoaJuridica)
     REFERENCES Veiculo(idVeiculo);
 
--- DESC PessoaJuridica;
+DESC PessoaJuridica;
 
--- TABELA EQUIPE MECÂNICOS     ------------------- OK
+-- TABELA EQUIPE MECÂNICOS    
 CREATE TABLE EqpMecanicos(
 	idEqpMecanicos INT auto_increment PRIMARY KEY
 );
 
-	ALTER TABLE EqpMecanicos ADD CONSTRAINT fk_Mecanico_EqpMecanicos -- OK
+	ALTER TABLE EqpMecanicos ADD CONSTRAINT fk_Mecanico_EqpMecanicos 
 	FOREIGN KEY (idEqpMecanicos)
 	REFERENCES Mecanico(idMecanico);
 
-	ALTER TABLE EqpMecanicos ADD CONSTRAINT fk_OdServiço_EqpMecanicos -- OK
+	ALTER TABLE EqpMecanicos ADD CONSTRAINT fk_OdServiço_EqpMecanicos 
 	FOREIGN KEY (idEqpMecanicos)
 	REFERENCES OdServiço(idOdServiço);
 
--- DESC EqpMecanicos;
+DESC EqpMecanicos;
 
--- TABELA ORDEM DE SERVIÇO      --------------------- OK
+-- TABELA ORDEM DE SERVIÇO      
 CREATE TABLE OdServiço(
 	idOdServiço INT auto_increment PRIMARY KEY,
     DataEmissão DATE,
@@ -110,7 +110,7 @@ CREATE TABLE OdServiço(
     DataConclusão DATE
 );
 
-	ALTER TABLE OdServiço ADD CONSTRAINT fk_serviços_OdServiço  -- OK
+	ALTER TABLE OdServiço ADD CONSTRAINT fk_serviços_OdServiço  
 	FOREIGN KEY (idOdServiço)
 	REFERENCES Serviços(idServiços);
 
@@ -119,71 +119,71 @@ CREATE TABLE OdServiço(
 	FOREIGN KEY (OdServiço)
 	REFERENCES OdServiço(idOdServiço);
 
--- DESC OdServiço;
+DESC OdServiço;
 
--- TABELA REFERÊNCIA DE PREÇOS     ------------- OK
+-- TABELA REFERÊNCIA DE PREÇOS     
 CREATE TABLE ReferenciaPreços(
 	idReferenciaPreços INT auto_increment PRIMARY KEY
 );
 
-	ALTER TABLE ReferenciaPreços ADD CONSTRAINT fk_OdServiço_ReferenciaPreços -- OK
+	ALTER TABLE ReferenciaPreços ADD CONSTRAINT fk_OdServiço_ReferenciaPreços 
 	FOREIGN KEY (idReferenciaPreços)
 	REFERENCES OdServiço(idOdServiço);
 
--- DESC ReferenciaPreços;
+DESC ReferenciaPreços;
 
--- TABELA AUTORIZAÇÃO CLIENTE    ---------------- OK
+-- TABELA AUTORIZAÇÃO CLIENTE   
 CREATE TABLE Autorização(
 	idAutorização INT auto_increment PRIMARY KEY,
 	Autorizado BOOL DEFAULT FALSE
 );
 
-	ALTER TABLE Autorização ADD CONSTRAINT fk__clientes_autorização -- OK
+	ALTER TABLE Autorização ADD CONSTRAINT fk__clientes_autorização 
 	FOREIGN KEY (idAutorização)
 	REFERENCES Clientes(idClientes);
 
-	ALTER TABLE Autorização ADD CONSTRAINT fk_veiculo_autorização -- OK
+	ALTER TABLE Autorização ADD CONSTRAINT fk_veiculo_autorização 
 	FOREIGN KEY (idAutorização)
 	REFERENCES Veiculo(idVeiculo);
 
-	ALTER TABLE Autorização ADD CONSTRAINT fk_OdServiço_autorização -- OK
+	ALTER TABLE Autorização ADD CONSTRAINT fk_OdServiço_autorização 
 	FOREIGN KEY (idAutorização)
 	REFERENCES OdServiço(idOdServiço);
     
--- DESC Autorização;
+DESC Autorização;
 
--- TABELA ORDEM DE SERVIÇO PEÇAS      ----------------- OK
+-- TABELA ORDEM DE SERVIÇO PEÇAS      
 CREATE TABLE OsPecas(
 	idOsPecas INT auto_increment PRIMARY KEY
 );
 
-	ALTER TABLE OsPecas ADD CONSTRAINT fk__pecas_Ospecas -- OK
+	ALTER TABLE OsPecas ADD CONSTRAINT fk__pecas_Ospecas 
 	FOREIGN KEY (idOsPecas)
 	REFERENCES Pecas(idPecas);
 
-	ALTER TABLE OsPecas  ADD CONSTRAINT fk_OdServiço_Ospecas -- OK
+	ALTER TABLE OsPecas  ADD CONSTRAINT fk_OdServiço_Ospecas 
 	FOREIGN KEY (idOsPecas)
 	REFERENCES OdServiço(idOdServiço);
 
--- DESC OsPecas;
+DESC OsPecas;
 
--- TABELA CONSERTO       --------------------------------- OK
+-- TABELA CONSERTO       
 CREATE TABLE Conserto(
 	idConserto INT auto_increment PRIMARY KEY,
     Descrição VARCHAR(45) NOT NULL
 );
 
--- DESC Conserto;
+DESC Conserto;
 
--- TABELA REVISÃO    ------------------------------ OK
+-- TABELA REVISÃO    
 CREATE TABLE Revisao(
 	idRevisao INT auto_increment PRIMARY KEY,
     Descrição VARCHAR(45) NOT NULL
 );
 
--- DESC Revisao;
+DESC Revisao;
 
--- TABELA MECÂNICO        ---------------- OK
+-- TABELA MECÂNICO        
 CREATE TABLE Mecanico(
 	idMecanico INT auto_increment PRIMARY KEY,
     Nome VARCHAR(45) NOT NULL,
@@ -191,28 +191,25 @@ CREATE TABLE Mecanico(
     Especialidade VARCHAR(45) NOT NULL
 );
 
--- DESC Mecanico;
+DESC Mecanico;
 
--- TABELA PEÇAS     --------------------- OK
+-- TABELA PEÇAS     
 CREATE TABLE Pecas(
 	idPecas INT auto_increment PRIMARY KEY,
     Descrição VARCHAR(45),
     Valor FLOAT NOT NULL
 );
 
--- DESC Pecas;
+DESC Pecas;
 
--- TABEELA SERVIÇOS      --------------------------- OK
+-- TABEELA SERVIÇOS      
 CREATE TABLE Serviços(
 	idServiços INT auto_increment PRIMARY KEY,
     Descrição VARCHAR(45),
     Valor FLOAT NOT NULL
 );
 
--- DESC Serviços;
-
-/*
-show tables;
+DESC Serviços;
 
 -- -- -- -- -- -- -- -- -- -- -- -- INSERINDO DADOS -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -258,14 +255,14 @@ INSERT INTO Autorização (idAutorização, Autorizado) VALUES
 (4, TRUE),
 (5, FALSE);
                                 
-INSERT INTO Pecas (idPecas, Descrição, Valor) VALUES 	-- ok
+INSERT INTO Pecas (idPecas, Descrição, Valor) VALUES 	
 (1, 'Rolamento da direção', '150.00'),
 (2, 'Jogo de velas', '100.00'),
 (3, 'Volante', '250.00'),
 (4, 'Caixa eletrica de fusíveis', '300.00'),
 (5, 'Jogo lanternas traseiras', '350.00');
                                 
-INSERT INTO Serviços (idServiços, Descrição, Valor) VALUES 	-- ok
+INSERT INTO Serviços (idServiços, Descrição, Valor) VALUES 
 (1, 'Troca do rolamento da direção', '250.00'),
 (2, 'Troca jogo de velas', '200.00'),
 (3, 'Troca do volante', '350.00'),
@@ -293,5 +290,3 @@ SELECT * FROM Serviços;
 SELECT Autorização.Autorizado, OdServiço.idOdServiço, Clientes.idClientes
 FROM Autorização
 CROSS JOIN OdServiço, Clientes; 
-
-*/
